@@ -21,6 +21,7 @@ use std::str;
 /// blocks, all buffered output will be flushed to the underlying writer.
 /// Otherwise, output will stay buffered until `flush` is explicitly called.
 #[derive(Debug)]
+#[allow(dead_code)]
 pub(crate) struct TabWriter<'a, W> {
     pub(crate) w: W,
     lines: Vec<Vec<Cell<'a>>>,
@@ -36,6 +37,7 @@ pub(crate) struct TabWriter<'a, W> {
 
 /// `Alignment` represents how a `TabWriter` should align text within its cell.
 #[derive(Debug)]
+#[allow(dead_code)]
 pub enum Alignment {
     /// Text should be aligned with the left edge of the cell
     Left,
@@ -46,6 +48,7 @@ pub enum Alignment {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 struct Cell<'a> {
     width: usize, // in characters
     data: &'a [u8],
@@ -53,6 +56,7 @@ struct Cell<'a> {
     contains_escape: bool,
 }
 
+#[allow(dead_code)]
 impl<'a, W: io::Write> TabWriter<'a, W> {
     /// Create a new `TabWriter` from an existing `Writer`.
     ///
@@ -159,6 +163,7 @@ const VTAB: char = '\x0B';
 const NEWLINE: char = '\n';
 const FORM_FEED: char = '\x0C';
 
+#[allow(dead_code)]
 impl<'a, W: io::Write> TabWriter<'a, W> {
     pub(crate) fn write(&mut self, buf: &'a [u8]) -> io::Result<usize> {
         let mut it = CharIndices::new(buf);
@@ -338,8 +343,10 @@ impl<'a, W: io::Write> TabWriter<'a, W> {
 ///
 /// This combines the error that happened while flushing the buffer with the
 /// `TabWriter` itself.
+#[allow(dead_code)]
 pub struct IntoInnerError<W>(W, io::Error);
 
+#[allow(dead_code)]
 impl<W> IntoInnerError<W> {
     /// Returns the error which caused the `into_error()` call to fail.
     pub fn error(&self) -> &io::Error {
@@ -397,6 +404,7 @@ const fn utf8_acc_cont_byte(ch: u32, byte: u8) -> u32 {
 /// Checks whether the byte is a UTF-8 continuation byte (i.e., starts with the
 /// bits `10`).
 #[inline]
+#[allow(dead_code)]
 pub(super) const fn utf8_is_cont_byte(byte: u8) -> bool {
     (byte as i8) < -64
 }
@@ -530,9 +538,13 @@ impl<'a> Iterator for CharIndices<'a> {
     }
 }
 
+#[allow(dead_code)]
 const FILTER_HTML: u32 = 1 << 0;
+#[allow(dead_code)]
 const STRIP_ESCAPE: u32 = 1 << 1;
+#[allow(dead_code)]
 const ALIGN_RIGHT: u32 = 1 << 2;
+#[allow(dead_code)]
 const DISCARD_EMPTY_COLUMNS: u32 = 1 << 3;
 
 #[cfg(test)]
